@@ -1,0 +1,469 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>İKÜ | Yazılım Geliştirme Portfolyosu</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <style>
+        /* KURUMSAL RENK PALETİ VE DEĞİŞKENLER */
+        :root {
+            --iku-red: #C4122E;
+            --iku-red-hover: #A00F25;
+            --iku-gold: #D4AF37;
+            --bg-color: #0A0A0A;        /* Çok koyu, mat siyah (Göz yormaz) */
+            --card-bg: #121212;         /* Kartlar için bir ton açık siyah */
+            --border-color: #262626;    /* Zarif kenarlık rengi */
+            --text-main: #EDEDED;       /* Saf beyaz yerine göz yormayan kırık beyaz */
+            --text-muted: #888888;      /* Okunabilir gri alt metinler */
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        /* ================= HEADER (ÜST MENÜ) ================= */
+        .navbar {
+            position: fixed;
+            top: 0; width: 100%;
+            background: rgba(10, 10, 10, 0.85);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--border-color);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 16px 48px;
+            z-index: 1000;
+        }
+
+        .navbar-brand {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 1.1rem;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+        }
+
+        .navbar-brand .red-dot {
+            width: 8px; height: 8px;
+            background-color: var(--iku-red);
+            border-radius: 50%;
+        }
+
+        .navbar-links {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            font-weight: 500;
+        }
+
+        /* ================= HERO (ANA BAŞLIK) ================= */
+        .hero {
+            padding: 180px 24px 80px;
+            max-width: 900px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 6px 16px;
+            background-color: rgba(212, 175, 55, 0.1);
+            color: var(--iku-gold);
+            border: 1px solid rgba(212, 175, 55, 0.2);
+            border-radius: 100px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            margin-bottom: 24px;
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            font-weight: 700;
+            line-height: 1.1;
+            letter-spacing: -1px;
+            margin-bottom: 24px;
+            color: #FFFFFF;
+        }
+
+        .hero p {
+            font-size: 1.15rem;
+            color: var(--text-muted);
+            max-width: 700px;
+            margin: 0 auto 48px;
+        }
+
+        /* ================= EKİP TABLOSU ================= */
+        .team-container {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 16px;
+        }
+
+        .team-member {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px 20px;
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+        }
+
+        .team-member-name { font-weight: 600; font-size: 0.95rem; color: var(--text-main); }
+        .team-member-id { font-size: 0.85rem; color: var(--text-muted); }
+
+        /* ================= PROJE VİTRİNİ ================= */
+        .portfolio-section {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 40px 24px 120px;
+        }
+
+        .section-header {
+            margin-bottom: 48px;
+            padding-bottom: 16px;
+            border-bottom: 1px solid var(--border-color);
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+        }
+
+        .section-header h2 { font-size: 1.8rem; font-weight: 600; color: #FFFFFF; }
+        .section-header span { color: var(--text-muted); font-size: 0.9rem; }
+
+        .project-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(360px, 1fr));
+            gap: 24px;
+        }
+
+        .project-card {
+            background-color: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 32px;
+            display: flex;
+            flex-direction: column;
+            transition: transform 0.2s ease, border-color 0.2s ease;
+        }
+
+        .project-card:hover {
+            transform: translateY(-4px);
+            border-color: #404040;
+        }
+
+        .project-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 20px;
+        }
+
+        .project-id {
+            font-size: 0.8rem;
+            font-weight: 700;
+            color: var(--iku-red);
+            letter-spacing: 1px;
+        }
+
+        .project-title {
+            font-size: 1.4rem;
+            font-weight: 600;
+            color: #FFFFFF;
+            margin-bottom: 12px;
+        }
+
+        .project-desc {
+            font-size: 0.95rem;
+            color: var(--text-muted);
+            margin-bottom: 32px;
+            flex-grow: 1;
+        }
+
+        .project-dev {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-top: 20px;
+            border-top: 1px solid var(--border-color);
+            margin-bottom: 24px;
+        }
+
+        .dev-label { font-size: 0.75rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 4px; display: block;}
+        .dev-value { font-size: 0.9rem; font-weight: 500; color: var(--text-main); }
+
+        /* Zarif İndirme Butonu */
+        .btn-download {
+            display: block;
+            width: 100%;
+            text-align: center;
+            background-color: #FFFFFF;
+            color: #000000;
+            text-decoration: none;
+            padding: 14px;
+            border-radius: 8px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            transition: background-color 0.2s, color 0.2s;
+        }
+
+        .btn-download:hover {
+            background-color: var(--iku-red);
+            color: #FFFFFF;
+        }
+
+        /* ================= FOOTER ================= */
+        footer {
+            background-color: var(--card-bg);
+            border-top: 1px solid var(--border-color);
+            padding: 60px 48px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .footer-info { color: var(--text-muted); font-size: 0.9rem; }
+        .footer-info span { color: var(--text-main); font-weight: 500; }
+
+        /* Responsive Tasarım */
+        @media (max-width: 768px) {
+            .navbar { padding: 16px 24px; }
+            .hero { padding: 140px 20px 60px; }
+            .hero h1 { font-size: 2.5rem; }
+            footer { flex-direction: column; gap: 20px; text-align: center; padding: 40px 24px; }
+        }
+    </style>
+</head>
+<body>
+
+    <nav class="navbar">
+        <div class="navbar-brand">
+            <div class="red-dot"></div>
+            İSTANBUL KÜLTÜR ÜNİVERSİTESİ
+        </div>
+        <div class="navbar-links">
+            Bilgisayar Programcılığı / 2026
+        </div>
+    </nav>
+
+    <header class="hero">
+        <div class="badge">Dönem Sonu Projesi</div>
+        <h1>Nesne Tabanlı Programlama <br>Yazılım Çözümleri</h1>
+        <p>PyQt5 otomasyonları, kapsülleme prensipleri ve modern yazılım mimarisiyle geliştirilmiş 10 farklı endüstri standardı sistem portfolyosu.</p>
+        
+        <div class="team-container">
+            <div class="team-member">
+                <div>
+                    <div class="team-member-name">Halit Güneş</div>
+                    <div class="team-member-id">2500006000</div>
+                </div>
+            </div>
+            <div class="team-member">
+                <div>
+                    <div class="team-member-name">Alp Eren Akcelep</div>
+                    <div class="team-member-id">2500004155</div>
+                </div>
+            </div>
+            <div class="team-member">
+                <div>
+                    <div class="team-member-name">Yiğit Talha Gümüş</div>
+                    <div class="team-member-id">2500005347</div>
+                </div>
+            </div>
+            <div class="team-member">
+                <div>
+                    <div class="team-member-name">Berkkan Kahraman</div>
+                    <div class="team-member-id">2500005042</div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main class="portfolio-section">
+        <div class="section-header">
+            <h2>Geliştirilen Sistemler</h2>
+            <span>Toplam 10 Proje</span>
+        </div>
+
+        <div class="project-grid">
+
+            <div class="project-card">
+                <div class="project-top">
+                    <span class="project-id">PROJE 01</span>
+                </div>
+                <h3 class="project-title">Araç Paylaşım Sistemi</h3>
+                <p class="project-desc">Araç nesneleri ve Kullanıcı verilerini bağlayan, saatlik kiralama durumunu gerçek zamanlı işleyen gelişmiş rezervasyon otomasyonu.</p>
+                <div class="project-dev">
+                    <div>
+                        <span class="dev-label">Geliştirici</span>
+                        <span class="dev-value">Alp Eren Akcelep</span>
+                    </div>
+                </div>
+                <a href="proje1.zip" class="btn-download">Projeyi İndir (.zip)</a>
+            </div>
+
+            <div class="project-card">
+                <div class="project-top">
+                    <span class="project-id">PROJE 02</span>
+                </div>
+                <h3 class="project-title">Doktor Randevu Yönetimi</h3>
+                <p class="project-desc">Hastane hiyerarşisini modelleyen, zaman çakışmalarını engelleyen ve doktor-hasta ilişkisini sınıflarla koruyan medikal yazılım.</p>
+                <div class="project-dev">
+                    <div>
+                        <span class="dev-label">Geliştirici</span>
+                        <span class="dev-value">Yiğit Talha Gümüş</span>
+                    </div>
+                </div>
+                <a href="proje2.zip" class="btn-download">Projeyi İndir (.zip)</a>
+            </div>
+
+            <div class="project-card">
+                <div class="project-top">
+                    <span class="project-id">PROJE 03</span>
+                </div>
+                <h3 class="project-title">Dijital Kütüphane Otomasyonu</h3>
+                <p class="project-desc">Composition (Bileşim) yapısıyla geliştirilen, ödünç ve iade süreçlerini şık ve göz yormayan bir arayüzle sunan arşiv yönetim modülü.</p>
+                <div class="project-dev">
+                    <div>
+                        <span class="dev-label">Geliştirici</span>
+                        <span class="dev-value">Halit Güneş</span>
+                    </div>
+                </div>
+                <a href="proje3.zip" class="btn-download">Projeyi İndir (.zip)</a>
+            </div>
+
+            <div class="project-card">
+                <div class="project-top">
+                    <span class="project-id">PROJE 04</span>
+                </div>
+                <h3 class="project-title">Etkinlik Kayıt Sistemi</h3>
+                <p class="project-desc">Bilet nesnesi oluşturma süreçlerini otomatize eden, etkinlik bazlı kapasite düşümü ve raporlama yapan organizasyon altyapısı.</p>
+                <div class="project-dev">
+                    <div>
+                        <span class="dev-label">Geliştirici</span>
+                        <span class="dev-value">Berkkan Kahraman</span>
+                    </div>
+                </div>
+                <a href="proje4.zip" class="btn-download">Projeyi İndir (.zip)</a>
+            </div>
+
+            <div class="project-card">
+                <div class="project-top">
+                    <span class="project-id">PROJE 05</span>
+                </div>
+                <h3 class="project-title">Online Kurs Platformu</h3>
+                <p class="project-desc">Eğitmen ve Öğrenci verilerini işleyen, kontenjan hesaplamasıyla kurs yönetimi sağlayan dijital eğitim portalı simülasyonu.</p>
+                <div class="project-dev">
+                    <div>
+                        <span class="dev-label">Geliştirici</span>
+                        <span class="dev-value">Yiğit Talha Gümüş</span>
+                    </div>
+                </div>
+                <a href="proje5.zip" class="btn-download">Projeyi İndir (.zip)</a>
+            </div>
+
+            <div class="project-card">
+                <div class="project-top">
+                    <span class="project-id">PROJE 06</span>
+                </div>
+                <h3 class="project-title">Yemek Tarif Platformu</h3>
+                <p class="project-desc">Tarif ve Malzeme sınıfları arasında veri köprüsü kuran, hazırlık süreleri ve kategorizasyon içeren dinamik liste uygulaması.</p>
+                <div class="project-dev">
+                    <div>
+                        <span class="dev-label">Geliştirici</span>
+                        <span class="dev-value">Alp Eren Akcelep</span>
+                    </div>
+                </div>
+                <a href="proje6.zip" class="btn-download">Projeyi İndir (.zip)</a>
+            </div>
+
+            <div class="project-card">
+                <div class="project-top">
+                    <span class="project-id">PROJE 07</span>
+                </div>
+                <h3 class="project-title">Fitness Takip Sistemi</h3>
+                <p class="project-desc">Kişisel sağlık verilerini kapsülleyen, antrenman türü ve sürelerine göre algoritmik kalori takibi yapan veri analiz aracı.</p>
+                <div class="project-dev">
+                    <div>
+                        <span class="dev-label">Geliştirici</span>
+                        <span class="dev-value">Alp Eren Akcelep</span>
+                    </div>
+                </div>
+                <a href="proje7.zip" class="btn-download">Projeyi İndir (.zip)</a>
+            </div>
+
+            <div class="project-card">
+                <div class="project-top">
+                    <span class="project-id">PROJE 08</span>
+                </div>
+                <h3 class="project-title">Endüstriyel Depo Yönetimi</h3>
+                <p class="project-desc">Stok manipülasyonlarını sıkı hata kontrolleriyle yöneten, sipariş onayı sonrası otomatik stok düşümü yapan ticari ürün yöneticisi.</p>
+                <div class="project-dev">
+                    <div>
+                        <span class="dev-label">Geliştirici</span>
+                        <span class="dev-value">Halit Güneş</span>
+                    </div>
+                </div>
+                <a href="proje8.zip" class="btn-download">Projeyi İndir (.zip)</a>
+            </div>
+
+            <div class="project-card">
+                <div class="project-top">
+                    <span class="project-id">PROJE 09</span>
+                </div>
+                <h3 class="project-title">Seyahat Planlama Uygulaması</h3>
+                <p class="project-desc">Seyahat ana sınıfı altında Rota, Otel ve Aktivite listelerini derleyip kullanıcıya mantıksal bir tur ajandası çıkaran planlama sistemi.</p>
+                <div class="project-dev">
+                    <div>
+                        <span class="dev-label">Geliştirici</span>
+                        <span class="dev-value">Berkkan Kahraman</span>
+                    </div>
+                </div>
+                <a href="proje9.zip" class="btn-download">Projeyi İndir (.zip)</a>
+            </div>
+
+            <div class="project-card">
+                <div class="project-top">
+                    <span class="project-id">PROJE 10</span>
+                </div>
+                <h3 class="project-title">Kurumsal CRM Paneli</h3>
+                <p class="project-desc">Manager sınıf tasarımını kullanan; satış verileri ile destek taleplerini "Müşteri" nesnesine bağlayan teknolojik otomasyon.</p>
+                <div class="project-dev">
+                    <div>
+                        <span class="dev-label">Geliştirici</span>
+                        <span class="dev-value">Halit Güneş</span>
+                    </div>
+                </div>
+                <a href="proje10.zip" class="btn-download">Projeyi İndir (.zip)</a>
+            </div>
+
+        </div>
+    </main>
+
+    <footer>
+        <div class="footer-info">
+            &copy; 2026 <span>İKÜ Bilgisayar Programcılığı</span>
+        </div>
+        <div class="footer-info">
+            Nesne Tabanlı Programlama Dersi Dönem Sonu Projesi
+        </div>
+    </footer>
+
+</body>
+</html>
